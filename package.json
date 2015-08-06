@@ -26,9 +26,6 @@
     }
   ],
   "dependencies": {
-    "nan": "^1.0.0"
-  },
-  "devDependencies": {
-    "node-image-2": "^0.5.2"
+    "nan": "^1.8.4"
   }
 }
