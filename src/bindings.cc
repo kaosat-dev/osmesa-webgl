@@ -544,10 +544,10 @@ void init(Handle<Object> target)
 #endif
 
   /* Shader Binary */
-#ifndef __APPLE__
+/*#ifndef __APPLE__
   JS_GL_CONSTANT(SHADER_BINARY_FORMATS);
   JS_GL_CONSTANT(NUM_SHADER_BINARY_FORMATS);
-#endif
+#endif*/
 
   /* Shader Precision-Specified Types */
 #ifndef __APPLE__
