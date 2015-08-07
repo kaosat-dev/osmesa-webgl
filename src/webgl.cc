@@ -109,7 +109,10 @@ NAN_METHOD(CreateContext) {
   OSMesaContext context = OSMesaCreateContextExt(OSMESA_RGBA, 0, 0, 0, NULL);
   std::cout << "CreateContext: " << context << std::endl;
 
-  NanReturnValue(JS_INT((intptr_t)context));
+  //NanReturnValue(NanNew<v8::Integer>(stride));
+  //NanReturnValue(JS_INT((int64_t)context));
+
+  //NanReturnValue(JS_INT(static_cast<intptr_t>(context)));
 }
 
 NAN_METHOD(DestroyContext) {
@@ -525,11 +528,15 @@ NAN_METHOD(GetShaderParameter) {
     NanReturnValue(JS_BOOL(static_cast<bool>(value!=0)));
   case GL_SHADER_TYPE:
     glGetShaderiv(shader, pname, &value);
-    NanReturnValue(JS_INT(static_cast<unsigned long>(value)));
+    //NanReturnValue(JS_INT(static_cast<unsigned long>(value)));
+    NanReturnValue(JS_INT(static_cast<uint32_t>(value)));
+
   case GL_INFO_LOG_LENGTH:
   case GL_SHADER_SOURCE_LENGTH:
     glGetShaderiv(shader, pname, &value);
-    NanReturnValue(JS_INT(static_cast<long>(value)));
+    //NanReturnValue(JS_INT(static_cast<long>(value)));
+    NanReturnValue(JS_INT(static_cast<int32_t>(value)));
+
   default:
     return NanThrowTypeError("GetShaderParameter: Invalid Enum");
   }
@@ -597,7 +604,9 @@ NAN_METHOD(GetProgramParameter) {
   case GL_ACTIVE_ATTRIBUTES:
   case GL_ACTIVE_UNIFORMS:
     glGetProgramiv(program, pname, &value);
-    NanReturnValue(JS_INT(static_cast<long>(value)));
+    //NanReturnValue(JS_INT(static_cast<long>(value)));
+    NanReturnValue(JS_INT(static_cast<int32_t>(value)));
+
   default:
     return NanThrowTypeError("GetProgramParameter: Invalid Enum");
   }
@@ -609,7 +618,8 @@ NAN_METHOD(GetUniformLocation) {
 
   int program = args[0]->Int32Value();
   //String::AsciiValue name(args[1]);
-  NanAsciiString name NanNew(args[1])
+  v8::String::Utf8Value name(args[1]->ToString());
+
 
   NanReturnValue(JS_INT(glGetUniformLocation(program, *name)));
 }
@@ -1785,7 +1795,9 @@ NAN_METHOD(GetSupportedExtensions) {
 NAN_METHOD(GetExtension) {
   NanScope();
 
-  String::AsciiValue name(args[0]);
+  //String::AsciiValue name(args[0]);
+  v8::String::Utf8Value name(args[0]->ToString());
+
   char *sname=*name;
   char *extensions=(char*) glGetString(GL_EXTENSIONS);
 
