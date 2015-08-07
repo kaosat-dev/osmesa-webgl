@@ -3,3 +3,5 @@ sudo apt-get install curl
 sudo apt-get install autoconf
 sudo apt-get install pkg-config
 sudo apt-get install pkg-config
+
+sudo apt-get install libtinfo-dev
