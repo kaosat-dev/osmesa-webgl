@@ -109,10 +109,8 @@ NAN_METHOD(CreateContext) {
   OSMesaContext context = OSMesaCreateContextExt(OSMESA_RGBA, 0, 0, 0, NULL);
   std::cout << "CreateContext: " << context << std::endl;
 
-  //NanReturnValue(NanNew<v8::Integer>(stride));
-  //NanReturnValue(JS_INT((int64_t)context));
-
-  //NanReturnValue(JS_INT(static_cast<intptr_t>(context)));
+  int64_t _tmp = (int64_t)context;
+  NanReturnValue(NanNew<Number>(_tmp));  
 }
 
 NAN_METHOD(DestroyContext) {
